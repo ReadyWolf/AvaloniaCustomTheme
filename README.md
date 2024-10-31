@@ -1,4 +1,8 @@
 #Avalonia Custom Theme Loader for The inbuilt Fluent Theme 
+
+
+![image](https://github.com/user-attachments/assets/2aab8fee-bc91-4f67-8029-d6b14f8ff162)
+
 An Avalonia sample application for loading custom themes based on the inbuilt Fluent theme.
 
 I found changing the inbuilt Fluent theme for Avalonia a little tricky to adjust and apply, so I created a small project to learn and to help others. As I don't have too many public repos, my aim for this project is to provide some best practices and a complete, useful small project.
