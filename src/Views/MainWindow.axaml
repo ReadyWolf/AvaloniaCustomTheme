@@ -1,0 +1,126 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AvaloniaCustomTheme.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AvaloniaCustomTheme.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        RequestedThemeVariant="Default"
+        Title="AvaloniaCustomTheme"
+        TransparencyLevelHint="AcrylicBlur"
+        ExtendClientAreaToDecorationsHint="true"
+        
+        >
+  <!--
+TransparencyLevelHint="AcrylicBlur"
+  Background="Transparent"
+-->
+
+
+  <!--
+  <Window.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key='Light'>
+          <SolidColorBrush x:Key='BackgroundBrush'>SpringGreen</SolidColorBrush>
+          <SolidColorBrush x:Key='ForegroundBrush'>Black</SolidColorBrush>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key='Dark'>
+          <SolidColorBrush x:Key='BackgroundBrush'>DodgerBlue</SolidColorBrush>
+          <SolidColorBrush x:Key='ForegroundBrush'>White</SolidColorBrush>
+        </ResourceDictionary>
+      </ResourceDictionary.ThemeDictionaries>
+    </ResourceDictionary>
+  </Window.Resources>
+
+  <Window.Styles>
+    <Style Selector="Button">
+      <Setter Property="Background" Value="{DynamicResource BackgroundBrush}" />
+      <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}" />
+    </Style>
+  </Window.Styles>
+-->
+        <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+          <vm:MainWindowViewModel/>
+    </Design.DataContext>
+  <!--
+  <Window.DataContext>
+    <vm:MainWindowViewModel />
+  </Window.DataContext>
+-->
+
+  
+  
+  <Grid ColumnDefinitions="1*,1*" RowDefinitions="1*,30">
+
+    <StackPanel Grid.Column="0" Grid.Row="0">
+
+      <TextBlock> Set Theme</TextBlock>
+      <Button Content="Change ThemeRaw" Command="{Binding ClickChangeThemeRaw}"> </Button>
+
+
+      <Grid  ColumnDefinitions="Auto,Auto,150" RowDefinitions="Auto" >
+        <ComboBox Grid.Column="0" Grid.Row="0" ItemsSource="{Binding ThemeNames, Mode=OneWay}" SelectedItem="{Binding SelectedTheme, Mode=TwoWay}" />
+        <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding ThemeVariants, Mode=OneWay}" SelectedItem="{Binding SelectedThemeVariant, Mode=TwoWay}"/>
+        <StackPanel Orientation="Vertical" Grid.Column="2" Grid.Row="0">
+          <TextBlock Text="Transparency" />
+          <Slider Minimum="0" Maximum="255" Value="{Binding TransparencyValue}" />
+        </StackPanel>
+      </Grid>
+
+
+
+
+      <Button Click="ApplyTheme">Reload View</Button>
+     
+
+    </StackPanel>
+
+    <!-- Testing Area -->
+    
+    <StackPanel Grid.Column="1" Grid.Row="0">
+
+      <Button Content="Standard Button"> </Button>
+          <ThemeVariantScope RequestedThemeVariant="Dark">
+      <Button Content="Dark button" />
+        </ThemeVariantScope>
+      <ThemeVariantScope RequestedThemeVariant="Light">
+           <Button Content="Light button" />
+      </ThemeVariantScope>
+
+
+      <TextBlock Text="TextBlock Example" Margin="5"/>
+      <Button Content="Button Example" Margin="5"/>
+      <TextBox Watermark="TextBox Example" Margin="5"/>
+      <CheckBox Content="CheckBox Example" Margin="5"/>
+      <RadioButton Content="RadioButton Example" Margin="5"/>
+      <ComboBox Margin="5">
+        <ComboBoxItem Content="ComboBox Item 1"/>
+        <ComboBoxItem Content="ComboBox Item 2"/>
+      </ComboBox>
+      <Slider Margin="5" Minimum="0" Maximum="100" Value="50"/>
+      <ProgressBar Margin="5" Minimum="0" Maximum="100" Value="50"/>
+      <ListBox Margin="5">
+        <ListBoxItem Content="ListBox Item 1"/>
+        <ListBoxItem Content="ListBox Item 2"/>
+      </ListBox>
+      <TabControl Margin="5">
+        <TabItem Header="Tab 1">
+          <TextBlock Text="Tab 1 Content"/>
+        </TabItem>
+        <TabItem Header="Tab 2">
+          <TextBlock Text="Tab 2 Content"/>
+        </TabItem>
+      </TabControl>
+      
+      
+    </StackPanel>
+    <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Center"  Text="{Binding FooterMessageText}" />
+  </Grid>
+
+  
+</Window>
