@@ -1,9 +1,10 @@
 #Avalonia Custom Theme Loader for The inbuilt Fluent Theme 
 
+An Avalonia sample application for loading custom themes based on the inbuilt Fluent theme. ATM its ugly but functions
 
 ![image](https://github.com/user-attachments/assets/2aab8fee-bc91-4f67-8029-d6b14f8ff162)
 
-An Avalonia sample application for loading custom themes based on the inbuilt Fluent theme.
+
 
 I found changing the inbuilt Fluent theme for Avalonia a little tricky to adjust and apply, so I created a small project to learn and to help others. As I don't have too many public repos, my aim for this project is to provide some best practices and a complete, useful small project.
 
@@ -28,7 +29,7 @@ Saving/Loading the chosen theme on startup via reading AppSettings.json
 
 ## Installation & Usage
 
-Downloading the project and running it in Visual Studio 2019 or later should be fine as long as you have the latest version of Avalonia installed. Make sure you edit the Themes.json path in the FileIOService to a folder that your computer can read! I'll implement (work out how to) read the Themes.json file as an embedded resource.
+Downloading the project and running it in Visual Studio 2019 or later should be fine as long as you have the latest version of Avalonia installed. Make sure you edit the Themes.json path in the FileIOService to a folder that your computer can read! Later I'll implement (work out how to) read the Themes.json file as an embedded resource.
 
 ![image](https://github.com/user-attachments/assets/6bc854d5-3ed4-4dff-b3a7-e72f031506a0)
 
