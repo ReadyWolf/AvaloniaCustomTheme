@@ -35,11 +35,10 @@ namespace AvaloniaCustomTheme.ViewModels
         public ViewModelActivator Activator { get; }
 
         public ReactiveCommand<Unit, Unit> ClickChangeThemeRaw { get; }
+        public ReactiveCommand<Unit, Unit> ClickSaveSettings { get; }
+        public ReactiveCommand<Unit, Unit> ClickLoadSettings { get; }
 
 
-
-   
-        
         public ObservableCollection<string> ThemeNames { get; set; }
 
         private string _selectedTheme;
@@ -65,7 +64,6 @@ namespace AvaloniaCustomTheme.ViewModels
             set => this.RaiseAndSetIfChanged(ref _transparencyValue, value);
         }
      
-
         private string _footerMessageText;
 
         public string FooterMessageText
@@ -95,15 +93,14 @@ namespace AvaloniaCustomTheme.ViewModels
             ThemeNames = _ThemeManager.GetThemeNames();
              
             ThemeVariants = new ObservableCollection<string> { "Default", "Light", "Dark" };
-            
+
             /* load in defaults here */
-            int themeIndex = ThemeNames.IndexOf(_AppSettings.ThemeCurrentName) != -1 ? ThemeNames.IndexOf(_AppSettings.ThemeCurrentName) : 0 ;
-            SelectedTheme = ThemeNames[themeIndex];
-            int selectedThemeIndex = ThemeVariants.IndexOf(_AppSettings.ThemeVariant) != -1 ? ThemeVariants.IndexOf(_AppSettings.ThemeVariant) : 0;
-            SelectedThemeVariant = ThemeVariants[selectedThemeIndex];
-            TransparencyValue = _AppSettings.ThemeTransparency; 
+            RefreshCurrentValues();
 
             ClickChangeThemeRaw = ReactiveCommand.Create(() => UpdateThemeRaw());
+            ClickSaveSettings = ReactiveCommand.Create(() => SaveThemeSettingsToFile());
+            ClickLoadSettings = ReactiveCommand.Create(() => LoadThemeSettingsFromFile());
+
 
             Activator = new ViewModelActivator();
             this.WhenActivated((CompositeDisposable disposables) =>
@@ -114,8 +111,6 @@ namespace AvaloniaCustomTheme.ViewModels
                     .DisposeWith(disposables);
             });
 
-
-          
         }
 
         private void UpdateThemeRaw()
@@ -126,27 +121,41 @@ namespace AvaloniaCustomTheme.ViewModels
 
         public void ApplyThemeFromView()
         {
-           // GetBackgroundTransColor();
+
             SetTheme(SelectedTheme, SelectedThemeVariant, TransparencyValue);
-
-
-
-
-            SaveThemeSettingsToFile();
-
-        }
-
-
-
-        private void SaveThemeSettingsToFile()
-        {
             // Update Settings
             _AppSettings.ThemeCurrentName = SelectedTheme;
             _AppSettings.ThemeVariant = SelectedThemeVariant;
             _AppSettings.ThemeTransparency = TransparencyValue;
 
-            _FileIOService.SaveAppSettingsToFileAsync(_AppSettings);
+        }
 
+        private void RefreshCurrentValues()
+        {
+            int themeIndex = ThemeNames.IndexOf(_AppSettings.ThemeCurrentName) != -1 ? ThemeNames.IndexOf(_AppSettings.ThemeCurrentName) : 0;
+            SelectedTheme = ThemeNames[themeIndex];
+            int selectedThemeIndex = ThemeVariants.IndexOf(_AppSettings.ThemeVariant) != -1 ? ThemeVariants.IndexOf(_AppSettings.ThemeVariant) : 0;
+            SelectedThemeVariant = ThemeVariants[selectedThemeIndex];
+            TransparencyValue = _AppSettings.ThemeTransparency;
+
+        }
+
+        public void LoadThemeSettingsFromFile()
+        {
+            AppSettings loadedAppSettings = _FileIOService.LoadAppSettingsFromFile();
+
+            _AppSettings.UpdateAppSettings(loadedAppSettings);
+            RefreshCurrentValues();
+            FooterMessageText = $"Settings Loaded";
+          
+        }
+
+        private void SaveThemeSettingsToFile()
+        {
+
+
+            _FileIOService.SaveAppSettingsToFileAsync(_AppSettings);
+            FooterMessageText = $"Settings Saved";
         }
 
         private void SetTheme(String themeName, String themeVariantName, int themeTransparencyValue)
@@ -169,7 +178,6 @@ namespace AvaloniaCustomTheme.ViewModels
            
             try
             {
-
                   _AvaloniaApp.ApplyTheme(_ThemeManager.themes.Themes[themeName], themeVariant, themeTransparencyValue);
 
             }

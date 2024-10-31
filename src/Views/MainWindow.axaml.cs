@@ -14,7 +14,7 @@ namespace AvaloniaCustomTheme.Views
         {
             InitializeComponent();
             DataContext = DIUtils.GetRequiredService<MainWindowViewModel>();
-            ApplyTheme(null,null);
+            ApplyTheme(null, null);
         }
 
         // Hack - we have to apply themes from the code behind as we need to refresh the View. Which the ViewModel can't do without some issues...
@@ -25,17 +25,22 @@ namespace AvaloniaCustomTheme.Views
 
             DataContext = DIUtils.GetRequiredService<MainWindowViewModel>();
             this.Content = null;
-            
+
             InitializeComponent();
             DataContext = DIUtils.GetRequiredService<MainWindowViewModel>();
 
 
             this.ExtendClientAreaTitleBarHeightHint = -1;
-            
+
 
         }
 
+        public void LoadSettingsAndApplyTheme(object sender, RoutedEventArgs e)
+        {
+            var viewModel = DataContext as MainWindowViewModel;
+            viewModel?.LoadThemeSettingsFromFile();
+            ApplyTheme(sender, e);
         }
 
-   
+    }
 }

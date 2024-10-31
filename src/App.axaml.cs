@@ -44,7 +44,7 @@ namespace AvaloniaCustomTheme
         }
 
 
-        // This function breaks Avalonia's View have to use the view hack to get arround it
+        // This function breaks Avalonia. Had to do some codebehind the view hack to get arround it
         public void ApplyThemeRaw()
         {
                 // Remove previously present style
@@ -157,13 +157,44 @@ namespace AvaloniaCustomTheme
                 // BindingPlugins.DataValidators.RemoveAt(0);
                 desktop.MainWindow = new MainWindow
                 {
-                  
-
                     DataContext = DIUtils.GetRequiredService<MainWindowViewModel>()
                 };
+
+
+                // Run extra operations on Shutdown
+                desktop.ShutdownRequested += DesktopOnShutdownRequested;
             }
 
         base.OnFrameworkInitializationCompleted();
         }
+
+        // We want to save our ToDoList before we actually shutdown the App. As File I/O is async, we need to wait until file is closed
+        // before we can actually close this window
+
+        private bool _canClose; // This flag is used to check if window is allowed to close
+        private async void DesktopOnShutdownRequested(object? sender, ShutdownRequestedEventArgs e)
+        {
+            e.Cancel = !_canClose; // cancel closing event first time
+
+            if (!_canClose)
+            {
+                IFileIOService _fileIOService = DIUtils.GetRequiredService<IFileIOService>();
+                AppSettings appSettings = DIUtils.GetRequiredService < AppSettings>();
+
+                await _fileIOService.SaveAppSettingsToFileAsync(appSettings);
+
+                // Set _canClose to true and Close this Window again
+                _canClose = true;
+                if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                {
+                    desktop.Shutdown();
+                }
+            }
+        }
+
+
+
     }
+
+
 }

@@ -13,54 +13,23 @@
         ExtendClientAreaToDecorationsHint="true"
         
         >
-  <!--
-TransparencyLevelHint="AcrylicBlur"
-  Background="Transparent"
--->
 
 
-  <!--
-  <Window.Resources>
-    <ResourceDictionary>
-      <ResourceDictionary.ThemeDictionaries>
-        <ResourceDictionary x:Key='Light'>
-          <SolidColorBrush x:Key='BackgroundBrush'>SpringGreen</SolidColorBrush>
-          <SolidColorBrush x:Key='ForegroundBrush'>Black</SolidColorBrush>
-        </ResourceDictionary>
-        <ResourceDictionary x:Key='Dark'>
-          <SolidColorBrush x:Key='BackgroundBrush'>DodgerBlue</SolidColorBrush>
-          <SolidColorBrush x:Key='ForegroundBrush'>White</SolidColorBrush>
-        </ResourceDictionary>
-      </ResourceDictionary.ThemeDictionaries>
-    </ResourceDictionary>
-  </Window.Resources>
 
-  <Window.Styles>
-    <Style Selector="Button">
-      <Setter Property="Background" Value="{DynamicResource BackgroundBrush}" />
-      <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}" />
-    </Style>
-  </Window.Styles>
--->
         <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
           <vm:MainWindowViewModel/>
     </Design.DataContext>
-  <!--
-  <Window.DataContext>
-    <vm:MainWindowViewModel />
-  </Window.DataContext>
--->
 
-  
+
   
   <Grid ColumnDefinitions="1*,1*" RowDefinitions="1*,30">
 
     <StackPanel Grid.Column="0" Grid.Row="0">
 
-      <TextBlock> Set Theme</TextBlock>
-      <Button Content="Change ThemeRaw" Command="{Binding ClickChangeThemeRaw}"> </Button>
+      <TextBlock> Set Custom Theme</TextBlock>
+      <Button Content="Change ThemeRaw (Creates Avalonia Bug)" Command="{Binding ClickChangeThemeRaw}"> </Button>
 
 
       <Grid  ColumnDefinitions="Auto,Auto,150" RowDefinitions="Auto" >
@@ -74,9 +43,13 @@ TransparencyLevelHint="AcrylicBlur"
 
 
 
+      <Grid  ColumnDefinitions="Auto,Auto,Auto" RowDefinitions="Auto" >
+      <Button Grid.Column="0" Grid.Row="0" Click="ApplyTheme">Apply Theme </Button>
+      <Button Grid.Column="1" Grid.Row="0" Command="{Binding ClickSaveSettings}">Save Settings</Button>
 
-      <Button Click="ApplyTheme">Reload View</Button>
-     
+      <Button Grid.Column="2" Grid.Row="0" Command="{Binding LoadThemeSettingsFromFile}">Load Settings</Button>
+      <!--   <Button Grid.Column="2" Grid.Row="0" Click="LoadSettingsAndApplyTheme">Load Settings</Button> -->
+      </Grid>
 
     </StackPanel>
 
