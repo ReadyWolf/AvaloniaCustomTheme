@@ -21,11 +21,11 @@ Saving/Loading the chosen theme on startup via reading AppSettings.json
 
 ## TODO:
 
-[ ] Save on Exit
-[ ] Add Avalonia Tests
-[ ] Update UI
-[ ] Refactor and clean up to a professional standard
-[ ] Provide Summaries for Functions
+* Save on Exit
+* Add Avalonia Tests
+* Update UI
+* Refactor and clean up to a professional standard
+* Provide Summaries for functions
 
 ## Installation & Usage
 
