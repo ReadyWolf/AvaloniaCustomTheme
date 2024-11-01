@@ -2,8 +2,7 @@
 
 An Avalonia sample application for loading custom themes based on the inbuilt Fluent theme. ATM its ugly but functions
 
-![image](https://github.com/user-attachments/assets/2aab8fee-bc91-4f67-8029-d6b14f8ff162)
-
+![image](https://github.com/user-attachments/assets/c0eed4e7-f889-4e28-8e32-06778220bd47)
 
 
 I found changing the inbuilt Fluent theme for Avalonia a little tricky to adjust and apply, so I created a small project to learn and to help others. As I don't have too many public repos, my aim for this project is to provide some best practices and a complete, useful small project.
@@ -17,7 +16,7 @@ I had to create a workaround and use a bit of code-behind because directly apply
 Avalonia 11
 ReactiveUI
 Dependency Injection (via Splat and defined in my Bootstrapper.cs file)
-Loading custom themes based on the Fluent Theme Editor (Fluent Theme Editor) via JSON files (from Newtonsoft.Json)
+Loading custom themes based on the Fluent Theme Editor (https://theme.xaml.live/) via JSON files (from Newtonsoft.Json)
 Saving/Loading the chosen theme on startup via reading AppSettings.json
 
 ## TODO:
