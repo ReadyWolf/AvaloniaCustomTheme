@@ -20,7 +20,7 @@ namespace AvaloniaCustomTheme.ViewModels
 {
  
 
-    public partial class MainWindowViewModel : ViewModelBase, IActivatableViewModel
+    public partial class MainWindowViewModel : ViewModelBase
     {
 
         // SERVICES 
@@ -77,18 +77,10 @@ namespace AvaloniaCustomTheme.ViewModels
 
         public MainWindowViewModel()
         {
-           
-
-
             _ThemeManager = DIUtils.GetRequiredService<ThemeController>();
             _AvaloniaApp = DIUtils.GetRequiredService<App>();
             _AppSettings = DIUtils.GetRequiredService<AppSettings>();
             _FileIOService = DIUtils.GetRequiredService<IFileIOService>();
-
-
-            string jsonFilePath = @"D:/Avalonia/Themes.json";
-
-            _ThemeManager.LoadThemes(jsonFilePath);
 
             ThemeNames = _ThemeManager.GetThemeNames();
              
@@ -100,16 +92,6 @@ namespace AvaloniaCustomTheme.ViewModels
             ClickChangeThemeRaw = ReactiveCommand.Create(() => UpdateThemeRaw());
             ClickSaveSettings = ReactiveCommand.Create(() => SaveThemeSettingsToFile());
             ClickLoadSettings = ReactiveCommand.Create(() => LoadThemeSettingsFromFile());
-
-
-            Activator = new ViewModelActivator();
-            this.WhenActivated((CompositeDisposable disposables) =>
-            {
-                /* handle activation */
-                Disposable
-                    .Create(() => { /* handle deactivation */ })
-                    .DisposeWith(disposables);
-            });
 
         }
 
@@ -177,7 +159,6 @@ namespace AvaloniaCustomTheme.ViewModels
             try
             {
                   _AvaloniaApp.ApplyTheme(_ThemeManager.themes.Themes[themeName], themeVariant, themeTransparencyValue);
-
             }
             catch (NullReferenceException ex)
             {

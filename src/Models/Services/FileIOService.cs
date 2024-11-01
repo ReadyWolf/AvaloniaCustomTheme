@@ -1,4 +1,5 @@
-﻿using AvaloniaCustomTheme.Models.DTOS;
+﻿using Avalonia.Controls.Shapes;
+using AvaloniaCustomTheme.Models.DTOS;
 using AvaloniaCustomTheme.Models.Services;
 using System;
 using System.Collections.Generic;
@@ -40,17 +41,20 @@ namespace AvaloniaCustomTheme.Models
                 string currentDirectory = Directory.GetCurrentDirectory(); // Where the Current Directory is
 
                 // Ensure directories exist before setting the paths
-                _settingsPathFileName = Path.Combine(baseDirectory, "Settings", "Settings.json");
-                if (!Directory.Exists(Path.GetDirectoryName(_settingsPathFileName)))
+                _settingsPathFileName = System.IO.Path.Combine(baseDirectory, "Settings", "Settings.json");
+                if (!Directory.Exists(System.IO.Path.GetDirectoryName(_settingsPathFileName)))
                 {
-                    Directory.CreateDirectory(Path.GetDirectoryName(_settingsPathFileName));
+                    Directory.CreateDirectory(System.IO.Path.GetDirectoryName(_settingsPathFileName));
                 }
 
-                _themesPathFileName = @"D:\Avalonia\Themes.json";
 
-                if (!Directory.Exists(Path.GetDirectoryName(_themesPathFileName)))
+            
+
+            _themesPathFileName = @"M:\DEV\Avalonia\AvaloniaCustomTheme\src\Assets\Themes.json";
+
+                if (!Directory.Exists(System.IO.Path.GetDirectoryName(_themesPathFileName)))
                 {
-                    Directory.CreateDirectory(Path.GetDirectoryName(_themesPathFileName));
+                    Directory.CreateDirectory(System.IO.Path.GetDirectoryName(_themesPathFileName));
                 }
                 
                 result = true;
@@ -71,7 +75,7 @@ namespace AvaloniaCustomTheme.Models
         {
             IJsonService jsonService = DIUtils.GetRequiredService<IJsonService>();
             // Ensure all directories exists
-            Directory.CreateDirectory(Path.GetDirectoryName(_settingsPathFileName)!);
+            Directory.CreateDirectory(System.IO.Path.GetDirectoryName(_settingsPathFileName)!);
 
             // We use a FileStream to write all items to disc
             await jsonService.WriteJsonFileAsync(_settingsPathFileName, appSettings);
@@ -83,7 +87,7 @@ namespace AvaloniaCustomTheme.Models
             bool result = false;
             IJsonService jsonService = DIUtils.GetRequiredService<IJsonService>();
             // Ensure all directories exists
-            Directory.CreateDirectory(Path.GetDirectoryName(_settingsPathFileName)!);
+            Directory.CreateDirectory(System.IO.Path.GetDirectoryName(_settingsPathFileName)!);
 
             // We use a FileStream to write all items to disc
             jsonService.WriteJsonFile(_settingsPathFileName, appSettings);

@@ -85,6 +85,7 @@ namespace AvaloniaCustomTheme.Models.DTOS
         public static ColorPaletteResources ToColorPaletteResources(ThemeSettings settings, int transparency = 0xFF)
         {
 
+            // Add Transparency
             Func<int, string> toHex = number => number.ToString("X2");
             string transvalue = toHex(transparency);
             settings.RegionColor = settings.RegionColor.Substring(0, 1) + transvalue + settings.RegionColor.Substring(3);

@@ -39,7 +39,7 @@ namespace AvaloniaCustomTheme
 
                 this.RequestedThemeVariant = variant; // can be ThemeVariant.Default, ThemeVariant.Dark ThemeVariant.Light;
            
-            // Styles.Clear(); // don't do these gets rid of all the styles
+            // Styles.Clear(); // don't do this gets rid of all the styles
 
             var fluteThemeStyle = new FluentTheme();
             Styles.Remove(fluteThemeStyle);
@@ -127,6 +127,8 @@ namespace AvaloniaCustomTheme
                     }
                 };
 
+                var fluteThemeStyle = new FluentTheme();
+                Styles.Remove(fluteThemeStyle);
                 Styles.Add(theme);
 
                 // Optionally set the requested theme variant
@@ -155,15 +157,21 @@ namespace AvaloniaCustomTheme
                 // Add the App to the DI services
                 Locator.CurrentMutable.RegisterLazySingleton(() => this, typeof(App));
 
-               // MainWindowViewModel _MainWindowViewModel = DIUtils.GetRequiredService<MainWindowViewModel>();
+                // MainWindowViewModel _MainWindowViewModel = DIUtils.GetRequiredService<MainWindowViewModel>();
                 // Line below is needed to remove Avalonia data validation.
                 // Without this line you will get duplicate validations from both Avalonia and CT
-                // BindingPlugins.DataValidators.RemoveAt(0);
-                desktop.MainWindow = new MainWindow
+                 BindingPlugins.DataValidators.RemoveAt(0);
+
+                // Use DI for building Window
+                Locator.CurrentMutable.RegisterLazySingleton(() => new MainWindow()
                 {
                     DataContext = DIUtils.GetRequiredService<MainWindowViewModel>()
-                };
+                }, typeof(MainWindow));
+                desktop.MainWindow = DIUtils.GetRequiredService<MainWindow>();
 
+                // Apply the theme on App start...
+                MainWindow mainWindow = DIUtils.GetRequiredService<MainWindow>();
+                mainWindow.ApplyTheme(null, null);
 
                 // Run extra operations on Shutdown
                 desktop.ShutdownRequested += DesktopOnShutdownRequested;
@@ -186,6 +194,10 @@ namespace AvaloniaCustomTheme
                 AppSettings appSettings = DIUtils.GetRequiredService < AppSettings>();
 
                 await _fileIOService.SaveAppSettingsToFileAsync(appSettings);
+
+                
+
+
 
                 // Set _canClose to true and Close this Window again
                 _canClose = true;

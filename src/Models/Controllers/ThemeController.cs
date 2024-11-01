@@ -17,26 +17,6 @@ namespace AvaloniaCustomTheme.Models
         public  ThemeRoot themes;
         public  ObservableCollection<string> themeNames { get; set; }
 
-        public void LoadThemes(string filePath)
-        {
-            try
-            {
-
-                IFileIOService _fileIOService = DIUtils.GetRequiredService<IFileIOService>();
-                themes = _fileIOService.LoadThemesFromFile();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error loading themes: {ex.Message}");
-            }
-
-
-
-        
-
-            Console.WriteLine($"Done");
-        }
-
         public ObservableCollection<string> GetThemeNames()
         {
             var themeNames = new ObservableCollection<string>();
