@@ -152,8 +152,6 @@ namespace AvaloniaCustomTheme.ViewModels
 
         private void SaveThemeSettingsToFile()
         {
-
-
             _FileIOService.SaveAppSettingsToFileAsync(_AppSettings);
             FooterMessageText = $"Settings Saved";
         }

@@ -66,12 +66,5 @@ namespace AvaloniaCustomTheme
 
         }
 
-        public static void CopyProperties<T>(T source, T destination)
-        {
-            foreach (var property in typeof(T).GetProperties())
-            {
-                property.SetValue(destination, property.GetValue(source));
-            }
-        }
     }
 }

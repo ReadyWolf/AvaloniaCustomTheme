@@ -38,8 +38,12 @@ namespace AvaloniaCustomTheme
                 };
 
                 this.RequestedThemeVariant = variant; // can be ThemeVariant.Default, ThemeVariant.Dark ThemeVariant.Light;
-                Styles.Clear();
-                Styles.Add(applyTheme);
+           
+            // Styles.Clear(); // don't do these gets rid of all the styles
+
+            var fluteThemeStyle = new FluentTheme();
+            Styles.Remove(fluteThemeStyle);
+            Styles.Add(applyTheme);
 
         }
 
@@ -168,7 +172,7 @@ namespace AvaloniaCustomTheme
         base.OnFrameworkInitializationCompleted();
         }
 
-        // We want to save our ToDoList before we actually shutdown the App. As File I/O is async, we need to wait until file is closed
+        // We want to save our AppSettings before we actually shutdown the App. As File I/O is async, we need to wait until file is closed
         // before we can actually close this window
 
         private bool _canClose; // This flag is used to check if window is allowed to close
